@@ -368,7 +368,7 @@ const CommunitiesPage = () => {
         {filteredCommunities.length === 1 ? "community" : "communities"}
       </div>
 
-      {/* Communities Grid */}
+      {/* Communities Grid - REDESIGNED CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredCommunities.length > 0 ? (
           filteredCommunities.map((community, index) => (
@@ -377,55 +377,71 @@ const CommunitiesPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : {}}
               transition={{
-                duration: 0.4,
-                delay: Math.min(index * 0.05, 0.5),
+                duration: 0.3,
+                delay: Math.min(index * 0.05, 0.3),
               }}
-              className="bg-charcoal rounded-xl overflow-hidden shadow-lg hover:shadow-neon-green/10 transition-all duration-300 group"
+              whileHover={{ y: -5 }}
+              className="border border-gray-800 rounded-xl overflow-hidden bg-gradient-to-b from-charcoal to-black/70 will-change-auto"
             >
-              <div className="relative h-48 overflow-hidden">
+              {/* Card Header with Image */}
+              <div className="relative h-40">
                 <img
                   src={community.image}
                   alt={community.name}
-                  className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-transparent" />
-                <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-white">
-                  <MapPin size={14} className="text-neon-green" />
-                  <span className="text-sm">{community.country}</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+
+                {/* Location Badge */}
+                <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm border border-gray-700 rounded-md py-1 px-2 flex items-center space-x-1">
+                  <MapPin size={12} className="text-neon-green" />
+                  <span className="text-xs font-medium text-white">
+                    {community.country}
+                  </span>
                 </div>
               </div>
 
-              <div className="p-6 space-y-4">
-                <h3 className="text-xl font-semibold text-white group-hover:text-neon-green transition-colors duration-300">
+              {/* Content Area */}
+              <div className="p-4">
+                {/* Community Name */}
+                <h3 className="text-lg font-semibold text-white mb-2">
                   {community.name}
                 </h3>
 
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-black/50 text-neon-green rounded-full text-xs font-medium border border-neon-green/20">
+                {/* Tags Row */}
+                <div className="mb-3 flex flex-wrap gap-2">
+                  <span className="inline-block px-2 py-1 text-xs rounded bg-neon-green/10 text-neon-green border border-neon-green/20">
                     {community.genre}
                   </span>
+
+                  {/* Game Tags */}
                   {community.game !== "Multiple" &&
-                    community.game.split(", ").map((game) => (
-                      <span
-                        key={game}
-                        className="px-3 py-1 bg-black/50 text-gray-300 rounded-full text-xs font-medium"
-                      >
-                        {game}
-                      </span>
-                    ))}
+                    community.game
+                      .split(", ")
+                      .slice(0, 2)
+                      .map((game) => (
+                        <span
+                          key={game}
+                          className="inline-block px-2 py-1 text-xs rounded bg-gray-800 text-gray-300"
+                        >
+                          {game}
+                        </span>
+                      ))}
                 </div>
 
-                <div className="flex items-center text-gray-400 text-sm">
-                  <Users size={14} className="mr-2" />
+                {/* Members Count */}
+                <div className="flex items-center text-gray-400 text-sm mb-4">
+                  <Users size={14} className="mr-1" />
                   <span>{community.members.toLocaleString()} members</span>
                 </div>
 
+                {/* Join Button */}
                 <a
                   href={community.joinLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-2 rounded-lg bg-neon-green text-charcoal font-semibold text-center hover:bg-neon-green/90 transition-all duration-300 transform hover:scale-[1.02]"
+                  className="block w-full py-2 rounded-lg bg-neon-green text-charcoal font-medium text-center hover:opacity-90 active:scale-95 transition-all duration-150"
                 >
                   Join Community
                 </a>
@@ -433,12 +449,20 @@ const CommunitiesPage = () => {
             </motion.div>
           ))
         ) : (
-          <div className="col-span-full text-center py-12">
-            <div className="text-4xl mb-4">🎮</div>
+          <div className="col-span-full text-center py-16 border border-gray-800 rounded-xl">
+            <div className="inline-flex justify-center items-center w-16 h-16 mb-4 rounded-full bg-gray-900">
+              <Gamepad size={32} className="text-gray-500" />
+            </div>
             <h3 className="text-xl text-white mb-2">No communities found</h3>
             <p className="text-gray-400">
               Try adjusting your filters or search query
             </p>
+            <button
+              onClick={clearFilters}
+              className="mt-4 px-4 py-2 bg-charcoal border border-neon-green/30 text-neon-green rounded-lg hover:bg-neon-green/10 transition-colors"
+            >
+              Reset Filters
+            </button>
           </div>
         )}
       </div>
