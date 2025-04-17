@@ -1,5 +1,5 @@
-import React from 'react';
-import { Monitor, Smartphone, Gamepad2, Trophy, Code } from 'lucide-react';
+import React from "react";
+import { Monitor, Smartphone, Gamepad2, Trophy, Code } from "lucide-react";
 
 const categories = [
   {
@@ -7,18 +7,30 @@ const categories = [
     name: "Console Gaming",
     icon: Gamepad2,
     stories: [
-      { title: "Next-Gen Console Sales Surge in African Markets", date: "2025-03-15" },
-      { title: "Local Gaming Cafes Embrace Console Esports", date: "2025-03-14" }
-    ]
+      {
+        title: "Next-Gen Console Sales Surge in African Markets",
+        date: "2025-03-15",
+      },
+      {
+        title: "Local Gaming Cafes Embrace Console Esports",
+        date: "2025-03-14",
+      },
+    ],
   },
   {
     id: 2,
     name: "PC Gaming",
     icon: Monitor,
     stories: [
-      { title: "African PC Gaming Market Shows Exponential Growth", date: "2025-03-15" },
-      { title: "Cloud Gaming Services Expand Across the Continent", date: "2025-03-14" }
-    ]
+      {
+        title: "African PC Gaming Market Shows Exponential Growth",
+        date: "2025-03-15",
+      },
+      {
+        title: "Cloud Gaming Services Expand Across the Continent",
+        date: "2025-03-14",
+      },
+    ],
   },
   {
     id: 3,
@@ -26,27 +38,39 @@ const categories = [
     icon: Smartphone,
     stories: [
       { title: "Mobile Esports Takes Africa by Storm", date: "2025-03-15" },
-      { title: "Local Mobile Game Downloads Hit New Record", date: "2025-03-14" }
-    ]
+      {
+        title: "Local Mobile Game Downloads Hit New Record",
+        date: "2025-03-14",
+      },
+    ],
   },
   {
     id: 4,
     name: "Esports",
     icon: Trophy,
     stories: [
-      { title: "African Teams Qualify for Global Championships", date: "2025-03-15" },
-      { title: "New Esports Academies Open Across Africa", date: "2025-03-14" }
-    ]
+      {
+        title: "African Teams Qualify for Global Championships",
+        date: "2025-03-15",
+      },
+      { title: "New Esports Academies Open Across Africa", date: "2025-03-14" },
+    ],
   },
   {
     id: 5,
     name: "Dev in Africa",
     icon: Code,
     stories: [
-      { title: "Game Development Bootcamps Launch in 5 Countries", date: "2025-03-15" },
-      { title: "African Game Developers Showcase Innovation", date: "2025-03-14" }
-    ]
-  }
+      {
+        title: "Game Development Bootcamps Launch in 5 Countries",
+        date: "2025-03-15",
+      },
+      {
+        title: "African Game Developers Showcase Innovation",
+        date: "2025-03-14",
+      },
+    ],
+  },
 ];
 
 const Categories = () => {
@@ -78,3 +102,4 @@ const Categories = () => {
 };
 
 export default Categories;
+

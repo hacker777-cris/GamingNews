@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -63,61 +64,69 @@ const newsItems = [
 ];
 
 const NewsFeed = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Only trigger animations when component is mounted
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   return (
-    <section className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold gradient-text">Latest News</h2>
+    <section className="py-12 space-y-8">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-white bg-clip-text bg-gradient-to-r from-neon-green to-blue-400">
+          Latest News
+        </h2>
         <Link
           to="/all-news"
-          className="text-neon-green hover:text-white transition-colors flex items-center space-x-2"
+          className="flex items-center space-x-2 px-4 py-2 rounded-full bg-charcoal hover:bg-gray-800 text-neon-green transition-all duration-300"
         >
           <span>View All</span>
           <ArrowUpRight className="w-4 h-4" />
         </Link>
       </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="news-grid"
-      >
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {newsItems.map((item, index) => (
           <motion.article
             key={item.id}
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="card group cursor-pointer"
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{
+              duration: 0.4,
+              delay: Math.min(index * 0.1, 0.3), // Cap delay at 0.3s max
+            }}
+            className="bg-charcoal rounded-xl overflow-hidden shadow-lg hover:shadow-neon-green/10 transition-all duration-300 group"
           >
-            <div className="relative h-48 overflow-hidden">
+            <div className="relative h-52 overflow-hidden">
               <img
                 src={item.image || "/placeholder.svg"}
                 alt={item.title}
-                className="w-full h-full object-cover image-hover"
+                className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                loading="lazy" // Improve performance with lazy loading
               />
               <div className="absolute top-4 left-4">
-                <span className="px-3 py-1 bg-neon-green/20 text-neon-green rounded-full text-sm">
+                <span className="px-3 py-1 bg-black/50 backdrop-blur-sm text-neon-green rounded-full text-sm font-medium border border-neon-green/20">
                   {item.category}
                 </span>
               </div>
             </div>
             <div className="p-6 space-y-3">
               <span className="text-sm text-gray-400">{item.date}</span>
-              <h3 className="text-xl font-semibold group-hover:text-neon-green transition-colors">
+              <h3 className="text-xl font-semibold text-white group-hover:text-neon-green transition-colors duration-300">
                 {item.title}
               </h3>
-              <p className="text-gray-400">{item.preview}</p>
-              <div className="flex items-center space-x-2 text-neon-green group-hover:translate-x-2 transition-transform">
+              <p className="text-gray-400 line-clamp-2">{item.preview}</p>
+              <div className="pt-2 flex items-center space-x-2 text-neon-green group-hover:translate-x-2 transition-transform duration-300">
                 <span className="text-sm font-semibold">Read More</span>
                 <ArrowUpRight className="w-4 h-4" />
               </div>
             </div>
           </motion.article>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 };
 
 export default NewsFeed;
-

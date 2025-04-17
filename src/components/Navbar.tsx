@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Gamepad2,
   Search,
@@ -11,17 +14,19 @@ import {
   MessageSquare,
   Bell,
   User,
-} from 'lucide-react';
+  Users,
+} from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const navItems = [
-    { name: 'Home', icon: Home },
-    { name: 'Categories', icon: Layers },
-    { name: 'About', icon: Info },
-    { name: 'Contact', icon: MessageSquare },
+    { name: "Home", icon: Home, path: "/" },
+    { name: "Categories", icon: Layers, path: "/categories" },
+    { name: "Communities", icon: Users, path: "/communities" },
+    { name: "About", icon: Info, path: "/about" },
+    { name: "Contact", icon: MessageSquare, path: "/contact" },
   ];
 
   return (
@@ -43,22 +48,22 @@ const Navbar = () => {
               <div className="absolute inset-0 bg-neon-green/20 blur-xl rounded-full"></div>
             </div>
             <span className="text-xl font-bold text-white">
-              Gaming <span className="text-neon-green">Africa</span>
+              Africa <span className="text-neon-green">Esports</span>
             </span>
           </motion.div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
-              <motion.a
-                key={item.name}
-                href="#"
-                className="nav-link flex items-center space-x-2 group"
-                whileHover={{ scale: 1.05 }}
-              >
-                <item.icon className="w-4 h-4 group-hover:text-neon-green transition-colors" />
-                <span>{item.name}</span>
-              </motion.a>
+              <motion.div key={item.name} whileHover={{ scale: 1.05 }}>
+                <Link
+                  to={item.path}
+                  className="nav-link flex items-center space-x-2 group"
+                >
+                  <item.icon className="w-4 h-4 group-hover:text-neon-green transition-colors" />
+                  <span>{item.name}</span>
+                </Link>
+              </motion.div>
             ))}
           </div>
 
@@ -129,23 +134,27 @@ const Navbar = () => {
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden overflow-hidden bg-dark-charcoal/80 backdrop-blur-md"
             >
               <div className="px-4 py-6 space-y-4">
                 {navItems.map((item, index) => (
-                  <motion.a
+                  <motion.div
                     key={item.name}
-                    href="#"
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-center space-x-3 nav-link group"
                   >
-                    <item.icon className="h-5 w-5 group-hover:text-neon-green transition-colors" />
-                    <span>{item.name}</span>
-                  </motion.a>
+                    <Link
+                      to={item.path}
+                      className="flex items-center space-x-3 nav-link group"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <item.icon className="h-5 w-5 group-hover:text-neon-green transition-colors" />
+                      <span>{item.name}</span>
+                    </Link>
+                  </motion.div>
                 ))}
                 <div className="pt-4 border-t border-gray-700">
                   <motion.button
@@ -165,3 +174,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

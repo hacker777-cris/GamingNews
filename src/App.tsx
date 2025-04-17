@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import CommunitiesPage from "./components/Communities";
 
 // Lazy load components that are not immediately visible
 const NewsFeed = lazy(() => import("./components/NewsFeed"));
@@ -93,6 +94,14 @@ const AnimatedRoutes = () => {
               </Layout>
             }
           />
+          <Route
+            path="/communities"
+            element={
+              <Layout>
+                <CommunitiesPage />
+              </Layout>
+            }
+          />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -108,4 +117,3 @@ function App() {
 }
 
 export default App;
-
